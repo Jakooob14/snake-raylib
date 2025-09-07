@@ -24,7 +24,7 @@ void MenuScreen::Initialize()
 
     auto* text = AddComponent<Text>("Pong");
     text->SetAnchor(UIComponent::Anchor::CENTER);
-    text->SetFontSize(10.0f);
+    text->SetFontSize(8.0f);
     text->SetPosition(Vector2{0.0f, -120.0f});
 }
 
@@ -32,7 +32,7 @@ Button* MenuScreen::AddButton(const char* text, const std::function<void()>& onC
 {
     auto* button = AddComponent<Button>();
 
-    constexpr Vector2 size{250.0f, 40.0f};
+    constexpr Vector2 size{250.0f, 60.0f};
     const Vector2 pos = {0.0f, static_cast<float>(buttons) * size.y};
 
     button->SetAnchor(UIComponent::Anchor::CENTER);

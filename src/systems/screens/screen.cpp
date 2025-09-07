@@ -6,7 +6,6 @@
 
 #include <raylib.h>
 
-
 void Screen::Update()
 {
     // Remove components marked for destruction

@@ -58,7 +58,7 @@ void Game::Draw()
 void Game::Initialize()
 {
     // Load global assets
-    mechaFont = LoadFont("../resources/fonts/mecha.png");
+    mechaFont = LoadFont("./resources/fonts/mecha.png");
 
     // Create and set current screen
     SetCurrentScreen(std::make_unique<GameScreen>(*this));

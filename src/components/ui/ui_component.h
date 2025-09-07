@@ -34,12 +34,20 @@ public:
     [[nodiscard]] bool IsHovering() const;
 
     [[nodiscard]] Anchor GetAnchor() const { return anchor; }
-    void SetAnchor(const Anchor& value) { anchor = value; }
+    void SetAnchor(const Anchor& value)
+    {
+        anchor = value;
+        position = CalculateAnchoredPosition();
+    }
 
     [[nodiscard]] Vector2 GetBasePosition() const { return basePosition; }
 
+    [[nodiscard]] bool IsDrawn() const { return isDrawn; }
+    void SetIsDrawn(const bool& value) { isDrawn = value; }
+
 protected:
     void Update() override;
+    void Draw() override;
     virtual Vector2 CalculateAnchoredPosition();
 
 private:
@@ -49,6 +57,7 @@ private:
     Color textColor{BLACK};
     const char* text{};
     Anchor anchor{Anchor::TOP_LEFT};
+    bool isDrawn{true};
 
     Vector2 basePosition{};
 

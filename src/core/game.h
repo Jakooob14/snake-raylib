@@ -15,6 +15,10 @@ public:
     void Run();
 
     void SetCurrentScreen(std::unique_ptr<Screen> screen);
+
+    [[nodiscard]] bool IsGameOver() const { return gameOver; }
+    void SetGameOver(const bool& value) { gameOver = value; }
+
     void Exit();
 
 private:
@@ -23,6 +27,7 @@ private:
     static constexpr Color windowBackgroundColor{BLACK};
 
     bool shouldExit{false};
+    bool gameOver{false};
 
     std::unique_ptr<Screen> currentScreen{nullptr};
 

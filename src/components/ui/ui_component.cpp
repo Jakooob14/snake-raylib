@@ -6,8 +6,6 @@
 
 void UIComponent::Update()
 {
-    position = CalculateAnchoredPosition();
-
     // Make sure it sends event only once with `clicked` bool
     if (input::IsConfirming() && IsHovering() && !hasClicked)
     {
@@ -17,6 +15,11 @@ void UIComponent::Update()
 
     // Reset click
     if (hasClicked && !input::IsConfirming()) hasClicked = false;
+}
+
+void UIComponent::Draw()
+{
+    position = CalculateAnchoredPosition();
 }
 
 Vector2 UIComponent::CalculateAnchoredPosition()

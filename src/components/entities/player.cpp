@@ -1,8 +1,10 @@
 #include "player.h"
 
 #include <cstdio>
+#include <algorithm>
 
 #include "raylib.h"
+#include "../../core/game.h"
 #include "../../utils/input.h"
 
 void Player::Update()
@@ -13,85 +15,100 @@ void Player::Update()
 
 void Player::Draw()
 {
-    DrawRectangleV(GetPosition(), size, BLACK);
+    for (auto segment: segments)
+    {
+        const Vector2 pos{
+            segment.x * size.x,
+            segment.y * size.y
+        };
+
+        DrawRectangleV(pos, size, BLACK);
+    }
 }
 
 void Player::Move()
 {
+    if (game.IsGameOver()) return;
+
     const float deltaTime{GetFrameTime()};
 
     timeToMove -= deltaTime;
 
     if (timeToMove <= 0.0f)
     {
-        Vector2 pos{GetPosition()};
+        timeToMove = baseTimeToMove;
 
-        pos = Vector2{
-            pos.x + velocity.x,
-            pos.y + velocity.y
+        const Vector2 firstSegment{segments.back()};
+        Vector2 pos{
+            firstSegment.x + direction.x,
+            firstSegment.y + direction.y
         };
 
-        if (pos.x >= GetScreenWidth())
+        // Wall collisions
+        if (pos.x * size.x >= GetScreenWidth()) pos.x = 0.0f;
+        if (pos.x < 0.0f) pos.x = GetScreenWidth() / size.x - 1.0f;
+        if (pos.y * size.y >= GetScreenHeight()) pos.y = 0.0f;
+        if (pos.y < 0.0f) pos.y = GetScreenHeight() / size.y - 1.0f;
+
+        // Create a new segment at the direciton of the snake
+        segments.push_back(pos);
+
+        bool ateFruit{false};
+
+        // If the snake is not touching a fruit remove the last segment
+        for (auto it = fruits.begin(); it != fruits.end();)
         {
-            pos = Vector2{
-                0.0f,
-                pos.y
-            };
+            const Vector2 fruitPos{(*it)->GetPosition()};
+            if (fruitPos.x == pos.x && fruitPos.y == pos.y)
+            {
+                printf("hit\n");
+                (*it)->Destroy();
+                it = fruits.erase(it);
+                ateFruit = true;
+                break;
+            } else
+            {
+                ++it;
+            }
         }
 
-        if (pos.x < 0.0f)
+        if (!ateFruit) segments.erase(segments.begin());
+
+        // Self collision
+        for (size_t i = 0; i < segments.size() - 1; ++i)
         {
-            pos = Vector2{
-                static_cast<float>(GetScreenWidth()) - size.x,
-                pos.y
-            };
+            if (segments[i].x == segments.back().x && segments[i].y == segments.back().y)
+            {
+                game.SetGameOver(true);
+                return;
+            }
         }
-
-        if (pos.y >= GetScreenHeight())
-        {
-            pos = Vector2{
-                pos.x,
-                0.0f
-            };
-        }
-
-        if (pos.y < 0.0f)
-        {
-            pos = Vector2{
-                pos.x,
-                static_cast<float>(GetScreenHeight()) - size.y
-            };
-        }
-
-        SetPosition(pos);
-
-        timeToMove = baseTimeToMove;
     }
 }
 
 void Player::Direction()
 {
-    if (input::IsMoveUp())
+    if (input::IsMoveUp() && direction.y != 1.0f)
     {
-        velocity = Vector2{0.0f, -speed};
+        direction = Vector2{0.0f, -1.0f};
         return;
     }
 
-    if (input::IsMoveDown())
+    if (input::IsMoveDown() && direction.y != -1.0f)
     {
-        velocity = Vector2{0.0f, speed};
+        direction = Vector2{0.0f, 1.0f};
         return;
     }
 
-    if (input::IsMoveRight())
+    if (input::IsMoveRight() && direction.x != -1.0f)
     {
-        velocity = Vector2{speed, 0.0f};
+        direction = Vector2{1.0f, 0.0f};
         return;
     }
 
-    if (input::IsMoveLeft())
+    if (input::IsMoveLeft() && direction.x != 1.0f)
     {
-        velocity = Vector2{-speed, 0.0f};
+        direction = Vector2{-1.0f, 0.0f};
         return;
     }
 }
