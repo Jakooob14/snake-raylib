@@ -4,7 +4,7 @@
 #include <vector>
 #include <raylib.h>
 
-#include "../../core/game_component.h"
+#include "../../components/game_component.h"
 
 class Game;
 
@@ -13,6 +13,9 @@ class Screen
 public:
     explicit Screen(Game& game) : game(game) {}
     virtual ~Screen() = default;
+
+    [[nodiscard]] Color GetScreenBackgroundColor() const { return screenBackgroundColor; }
+    void SetScreenBackgroundColor(const Color& value) { screenBackgroundColor = value; }
 
     /**
      * @brief Adds a new component of type T to the game.
@@ -51,7 +54,7 @@ protected:
     friend class Game;
 
 private:
-    static constexpr Color screenBackgroundColor{BLACK};
+    Color screenBackgroundColor{BLACK};
 
     // All on-screen components
     std::vector<std::unique_ptr<GameComponent>> components{};

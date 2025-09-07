@@ -3,15 +3,25 @@
 
 namespace input
 {
-    // bool IsMoveUp(const PlayerId player)
-    // {
-    //     return player == PlayerId::PLAYER_LEFT ? IsKeyDown(KEY_W) : IsKeyDown(KEY_UP);
-    // }
-    //
-    // bool IsMoveDown(const PlayerId player)
-    // {
-    //     return player == PlayerId::PLAYER_LEFT ? IsKeyDown(KEY_S) : IsKeyDown(KEY_DOWN);
-    // }
+    bool IsMoveUp()
+    {
+        return IsKeyDown(KEY_W) || IsKeyDown(KEY_UP);
+    }
+
+    bool IsMoveDown()
+    {
+        return IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN);
+    }
+
+    bool IsMoveLeft()
+    {
+        return IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT);
+    }
+
+    bool IsMoveRight()
+    {
+        return IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT);
+    }
 
     bool IsConfirming()
     {

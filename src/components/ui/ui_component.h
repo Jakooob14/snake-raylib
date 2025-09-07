@@ -3,7 +3,7 @@
 #include <functional>
 
 #include "raylib.h"
-#include "../../core/game_component.h"
+#include "../game_component.h"
 
 
 class UIComponent : public GameComponent

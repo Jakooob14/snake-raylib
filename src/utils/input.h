@@ -6,8 +6,11 @@ enum class PlayerId;
 
 namespace input
 {
-    bool IsMoveUp(PlayerId player);
-    bool IsMoveDown(PlayerId player);
+    bool IsMoveUp();
+    bool IsMoveDown();
+    bool IsMoveLeft();
+    bool IsMoveRight();
+
     bool IsConfirming();
 }
 

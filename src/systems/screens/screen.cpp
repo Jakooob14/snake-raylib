@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-#include "../../core/game_component.h"
+#include "../../components/game_component.h"
 
 #include <raylib.h>
 

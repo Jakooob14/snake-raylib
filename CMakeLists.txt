@@ -22,9 +22,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(raylib)
 
 # Our Project
-add_executable(${PROJECT_NAME}
-        src/components/ui/text.cpp
-        src/components/ui/text.h)
+add_executable(${PROJECT_NAME})
 add_subdirectory(src)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
