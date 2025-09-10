@@ -12,11 +12,10 @@ void GameScreen::Update()
 
     if (fruits.size() < fruitCount)
     {
-        for (size_t i; fruitCount - fruits.size() > 0; ++i)
+        for (size_t i = 0; fruitCount - fruits.size() > 0; ++i)
         {
             SpawnFruit();
         }
-        fruitCount = 0;
     }
 
     if (game.IsGameOver() && gameOverText == nullptr)
@@ -38,15 +37,15 @@ void GameScreen::Initialize()
 
     game.SetGameOver(false);
 
-    SetScreenBackgroundColor(Color{158, 196, 36});
+    SetScreenBackgroundColor(Color{158, 196, 36, 255});
     player = AddComponent<Player>(playerSize, fruits, game);
 }
 
 void GameScreen::SpawnFruit()
 {
     const Vector2 pos{
-            static_cast<float>(GetRandomInt(1, GetScreenWidth() / playerSize.x - 1)),
-            static_cast<float>(GetRandomInt(1, GetScreenHeight() / playerSize.y))
+            static_cast<float>(GetRandomInt(1, game.GetGameWidth() / playerSize.x - 1)),
+            static_cast<float>(GetRandomInt(1, game.GetGameHeight() / playerSize.y))
     };
 
     // Check if new fruit would spawn at player, if yes try again
@@ -69,6 +68,5 @@ void GameScreen::SpawnFruit()
 
     Fruit* fruit{AddComponent<Fruit>(playerSize)};
     fruit->SetPosition(pos);
-    printf("%f, %f\n", pos.x, pos.y);
     fruits.push_back(fruit);
 }

@@ -3,7 +3,6 @@
 #include "screen.h"
 #include "../../components/entities/player.h"
 #include "../../components/ui/text.h"
-#include "../../utils/timers/function_timer.h"
 
 class Fruit;
 
@@ -18,8 +17,8 @@ protected:
     void Initialize() override;
 
 private:
-    const Vector2 playerSize{20.0f, 20.0f};
-    int fruitCount{10};
+    const Vector2 playerSize{32.0f, 32.0f};
+    int fruitCount{3};
 
     Text* gameOverText{nullptr};
     Player* player;

@@ -1,7 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
 #include <memory>
-#include <random>
 #include <raylib.h>
 
 #include "../systems/screens/screen.h"
@@ -19,12 +18,19 @@ public:
     [[nodiscard]] bool IsGameOver() const { return gameOver; }
     void SetGameOver(const bool& value) { gameOver = value; }
 
+    [[nodiscard]] int GetGameWidth() const { return gameWidth; }
+    void SetGameWidth(const int& value) { gameWidth = value; }
+
+    [[nodiscard]] int GetGameHeight() const { return gameHeight; }
+    void SetGameHeight(const int& value) { gameHeight = value; }
+
     void Exit();
 
 private:
-    static constexpr int windowWidth{800};
-    static constexpr int windowHeight{600};
-    static constexpr Color windowBackgroundColor{BLACK};
+    int gameWidth{768};
+    int gameHeight{640};
+    Color windowBackgroundColor{BLACK};
+    RenderTexture2D renderTarget{};
 
     bool shouldExit{false};
     bool gameOver{false};

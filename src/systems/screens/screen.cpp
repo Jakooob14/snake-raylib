@@ -14,6 +14,7 @@ void Screen::Update()
 
     for (auto &component : components) {
         if (!component) continue;
+        if (!component->IsInitialized()) component->Initialize();
         component->Update();
     }
 }

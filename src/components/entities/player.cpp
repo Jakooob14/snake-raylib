@@ -45,10 +45,10 @@ void Player::Move()
         };
 
         // Wall collisions
-        if (pos.x * size.x >= GetScreenWidth()) pos.x = 0.0f;
-        if (pos.x < 0.0f) pos.x = GetScreenWidth() / size.x - 1.0f;
-        if (pos.y * size.y >= GetScreenHeight()) pos.y = 0.0f;
-        if (pos.y < 0.0f) pos.y = GetScreenHeight() / size.y - 1.0f;
+        if (pos.x * size.x >= game.GetGameWidth()) pos.x = 0.0f;
+        if (pos.x < 0.0f) pos.x = game.GetGameWidth() / size.x - 1.0f;
+        if (pos.y * size.y >= game.GetGameHeight()) pos.y = 0.0f;
+        if (pos.y < 0.0f) pos.y = game.GetGameHeight() / size.y - 1.0f;
 
         // Create a new segment at the direciton of the snake
         segments.push_back(pos);
@@ -61,7 +61,6 @@ void Player::Move()
             const Vector2 fruitPos{(*it)->GetPosition()};
             if (fruitPos.x == pos.x && fruitPos.y == pos.y)
             {
-                printf("hit\n");
                 (*it)->Destroy();
                 it = fruits.erase(it);
                 ateFruit = true;

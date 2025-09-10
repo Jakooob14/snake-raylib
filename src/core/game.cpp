@@ -10,7 +10,8 @@
 
 void Game::Run()
 {
-    InitWindow(windowWidth, windowHeight, "Snake");
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+    InitWindow(gameWidth, gameHeight, "Snake");
     SetTargetFPS(60);
 
     Initialize();
@@ -46,17 +47,39 @@ void Game::Update()
 
 void Game::Draw()
 {
-    BeginDrawing();
+    BeginTextureMode(renderTarget);
+    ClearBackground(windowBackgroundColor);
+    if (currentScreen) currentScreen->Draw();
+    EndTextureMode();
 
+    // Draw the render texture scaled to the window maintaining aspect ratio
+    BeginDrawing();
     ClearBackground(windowBackgroundColor);
 
-    if (currentScreen) currentScreen->Draw();
+    const float scaleX = static_cast<float>(GetScreenWidth()) / gameWidth;
+    const float scaleY = static_cast<float>(GetScreenHeight()) / gameHeight;
+    const float scale = std::min(scaleX, scaleY);
+
+    const float destWidth = gameWidth * scale;
+    const float destHeight = gameHeight * scale;
+    const float offsetX = (static_cast<float>(GetScreenWidth()) - destWidth) * 0.5f;
+    const float offsetY = (static_cast<float>(GetScreenHeight()) - destHeight) * 0.5f;
+
+    // Flip vertically
+    const Rectangle src = { 0, 0, static_cast<float>(gameWidth), -static_cast<float>(gameHeight) };
+
+    const Rectangle dest = { offsetX, offsetY, destWidth, destHeight };
+
+    DrawTexturePro(renderTarget.texture, src, dest, {0, 0}, 0.0f, WHITE);
 
     EndDrawing();
 }
 
 void Game::Initialize()
 {
+    // Load the render texture for the window
+    renderTarget = LoadRenderTexture(gameWidth, gameHeight);
+
     // Load global assets
     mechaFont = LoadFont("./resources/fonts/mecha.png");
 
