@@ -44,8 +44,8 @@ void GameScreen::Initialize()
 void GameScreen::SpawnFruit()
 {
     const Vector2 pos{
-            static_cast<float>(GetRandomInt(1, game.GetGameWidth() / playerSize.x - 1)),
-            static_cast<float>(GetRandomInt(1, game.GetGameHeight() / playerSize.y))
+            static_cast<float>(GetRandomInt(0, game.GetGameWidth() / playerSize.x - 1)),
+            static_cast<float>(GetRandomInt(0, game.GetGameHeight() / playerSize.y - 1))
     };
 
     // Check if new fruit would spawn at player, if yes try again
@@ -53,6 +53,7 @@ void GameScreen::SpawnFruit()
     {
         if (pos.x != segment.x || pos.y != segment.y) continue;
 
+        printf("trying again\n");
         SpawnFruit();
         return;
     }
@@ -62,9 +63,11 @@ void GameScreen::SpawnFruit()
     {
         if (pos.x != fruit->GetPosition().x || pos.y != fruit->GetPosition().y) continue;
 
+        printf("trying again\n");
         SpawnFruit();
         return;
     }
+    printf("spawned at %f, %f\n", pos.x, pos.y);
 
     Fruit* fruit{AddComponent<Fruit>(playerSize)};
     fruit->SetPosition(pos);
