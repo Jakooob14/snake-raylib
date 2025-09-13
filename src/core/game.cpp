@@ -7,6 +7,7 @@
 #include "../systems/screens/game_screen.h"
 #include "../systems/screens/menu_screen.h"
 #include "../systems/screens/screen.h"
+#include "../systems/screens/settings_screen.h"
 
 void Game::Run()
 {
@@ -84,5 +85,5 @@ void Game::Initialize()
     mechaFont = LoadFont("./resources/fonts/mecha.png");
 
     // Create and set current screen
-    SetCurrentScreen(std::make_unique<GameScreen>(*this));
+    SetCurrentScreen(std::make_unique<MenuScreen>(*this));
 }

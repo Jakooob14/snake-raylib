@@ -1,6 +1,7 @@
 #include "menu_screen.h"
 
 #include "game_screen.h"
+#include "settings_screen.h"
 #include "../../components/ui/button.h"
 #include "../../components/ui/text.h"
 #include "../../core/game.h"
@@ -20,9 +21,10 @@ void MenuScreen::Initialize()
     Screen::Initialize();
 
     AddButton("Play", [this](){ PlayClick(); });
+    AddButton("Settings", [this](){ game.SetCurrentScreen(std::make_unique<SettingsScreen>(game)); });
     AddButton("Exit", [this](){ game.Exit(); });
 
-    auto* text = AddComponent<Text>("Pong");
+    auto* text = AddComponent<Text>("Snake");
     text->SetAnchor(UIComponent::Anchor::CENTER);
     text->SetFontSize(8.0f);
     text->SetPosition(Vector2{0.0f, -120.0f});

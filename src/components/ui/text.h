@@ -1,5 +1,7 @@
 #ifndef TEXT_H
 #define TEXT_H
+#include <utility>
+
 #include "ui_component.h"
 #include "../../core/globals.h"
 
@@ -7,13 +9,13 @@
 class Text : public UIComponent
 {
 public:
-    explicit Text(const char* text) : text(text) {}
+    explicit Text(std::string text) : text(std::move(text)) {}
 
     [[nodiscard]] Color GetTextColor() const { return textColor; }
     void SetTextColor(const Color& value) { textColor = value; }
 
-    [[nodiscard]] const char *GetText() const { return text; }
-    void SetText(const char* value) { text = value; }
+    [[nodiscard]] std::string GetText() const { return text; }
+    void SetText(const std::string& value) { text = value; }
 
     [[nodiscard]] float GetFontSize() const { return fontSize; }
     void SetFontSize(const float& value) { fontSize = value; }
@@ -29,7 +31,7 @@ protected:
 
 private:
     Color textColor{WHITE};
-    const char* text{};
+    std::string text{};
     float fontSize{3.0f};
     float spacing{4.0f};
     Font font{mechaFont};

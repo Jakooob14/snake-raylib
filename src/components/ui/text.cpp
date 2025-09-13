@@ -10,6 +10,6 @@ void Text::Draw()
     if (!IsDrawn()) return;
 
     const float actualFontSize{static_cast<float>(font.baseSize) * fontSize};
-    SetSize(MeasureTextEx(font, text, actualFontSize, spacing));
-    DrawTextEx(font, text, GetPosition(), actualFontSize, spacing, textColor);
+    SetSize(MeasureTextEx(font, text.c_str(), actualFontSize, spacing));
+    DrawTextEx(font, text.c_str(), GetPosition(), actualFontSize, spacing, textColor);
 }
