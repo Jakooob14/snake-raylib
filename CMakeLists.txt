@@ -1,5 +1,7 @@
+set(PROJECT_NAME snake-raylib)
+
 cmake_minimum_required(VERSION 3.24...3.30)
-project(snake-raylib)
+project(${PROJECT_NAME})
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -22,9 +24,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(raylib)
 
 # Our Project
-add_executable(${PROJECT_NAME}
-        src/components/entities/fruit.cpp
-        src/components/entities/fruit.h)
+add_executable(${PROJECT_NAME})
 add_subdirectory(src)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -65,8 +65,14 @@ endif()
 
 # On Windows set the subsystem as Windows
 if (WIN32)
-    set_target_properties(pong-raylib PROPERTIES
+    if (MSVC)
+        set_target_properties(${PROJECT_NAME} PROPERTIES
             WIN32_EXECUTABLE TRUE
             LINK_FLAGS "/ENTRY:mainCRTStartup"
-    )
+        )
+    else()
+        set_target_properties(${PROJECT_NAME} PROPERTIES
+            WIN32_EXECUTABLE TRUE
+        )
+    endif()
 endif()
