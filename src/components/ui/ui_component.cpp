@@ -10,11 +10,14 @@ void UIComponent::Update()
     if (input::IsConfirming() && IsHovering() && !hasClicked)
     {
         hasClicked = true;
-        if (onClick) onClick();
     }
 
     // Reset click
-    if (hasClicked && !input::IsConfirming()) hasClicked = false;
+    if (hasClicked && !input::IsConfirming())
+    {
+        if (onClick) onClick();
+        hasClicked = false;
+    }
 }
 
 void UIComponent::Draw()
