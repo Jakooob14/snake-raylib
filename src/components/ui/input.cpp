@@ -1,5 +1,17 @@
 #include "input.h"
 
+template<typename T>
+T Input::GetValue()
+{
+    switch (inputType)
+    {
+        case InputTypes::INT:
+            if (std::is_same_v<T, int>) return std::stoi(GetText());
+        default:
+            throw;
+    }
+}
+
 void Input::Update()
 {
     Text::Update();
@@ -9,12 +21,6 @@ void Input::Update()
         SetTextColor(RED);
 
         const int key{GetCharPressed()};
-        if (key >= 32 && key <= 125)
-        {
-            std::string newText = GetText();
-            newText += static_cast<char>(key);
-            SetText(newText);
-        }
 
         if (IsKeyPressed(KEY_BACKSPACE))
         {
@@ -25,6 +31,28 @@ void Input::Update()
                 SetText(newText);
             }
         }
+
+        int pressedKey{};
+
+        switch (inputType)
+        {
+            case InputTypes::INT:
+                if (key >= 48 && key <= 57) pressedKey = key;
+
+        }
+
+        // if (key >= 32 && key <= 125)
+        // {
+        //     std::string newText = GetText();
+        //     newText += static_cast<char>(key);
+        //     SetText(newText);
+        // }
+
+        if (!pressedKey) return;
+
+        std::string newText = GetText();
+        newText += static_cast<char>(pressedKey);
+        SetText(newText);
     } else
     {
         SetTextColor(WHITE);
@@ -35,5 +63,8 @@ void Input::Draw()
 {
     Text::Draw();
 
+    if (!IsDrawn()) return;
+
     DrawRectangleV(Vector2{GetPosition().x, GetPosition().y + GetSize().y - 3.0f}, Vector2{GetSize().x, 3.0f}, GetTextColor());
 }
+

@@ -26,6 +26,9 @@ public:
     [[nodiscard]] Font GetFont() const { return font; }
     void SetFont(const Font& value) { font = value; }
 
+    [[nodiscard]] bool GetAdjustSize() const { return adjustSize; }
+    void SetAdjustSize(const bool& value) { adjustSize = value; }
+
 protected:
     void Draw() override;
 
@@ -35,6 +38,7 @@ private:
     float fontSize{3.0f};
     float spacing{4.0f};
     Font font{mechaFont};
+    bool adjustSize{true};
 };
 
 
