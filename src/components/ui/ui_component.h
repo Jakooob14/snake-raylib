@@ -6,6 +6,8 @@
 #include "../game_component.h"
 
 
+// TODO: Redo whole UI system so it works correctly using relative and child values
+
 class UIComponent : public GameComponent
 {
 public:
@@ -27,18 +29,14 @@ public:
     void SetPosition(const Vector2& value);
 
     [[nodiscard]] Vector2 GetSize() const { return size; }
-    void SetSize(const Vector2& value) { size = value; }
+    void SetSize(const Vector2& value);
 
     void SetOnClick(const std::function<void()>& value) { onClick = value; }
 
     [[nodiscard]] bool IsHovering() const;
 
     [[nodiscard]] Anchor GetAnchor() const { return anchor; }
-    void SetAnchor(const Anchor& value)
-    {
-        anchor = value;
-        position = CalculateAnchoredPosition();
-    }
+    void SetAnchor(const Anchor& value);
 
     [[nodiscard]] Vector2 GetBasePosition() const { return basePosition; }
 
@@ -47,7 +45,7 @@ public:
 
 protected:
     void Update() override;
-    void Draw() override;
+    void Draw() override {};
     virtual Vector2 CalculateAnchoredPosition();
 
 private:

@@ -6,6 +6,7 @@ T Input::GetValue()
     switch (inputType)
     {
         case InputTypes::INT:
+            if (GetText().empty()) return 0;
             if (std::is_same_v<T, int>) return std::stoi(GetText());
         default:
             throw;
@@ -37,7 +38,7 @@ void Input::Update()
         switch (inputType)
         {
             case InputTypes::INT:
-                if (key >= 48 && key <= 57) pressedKey = key;
+                if (key >= 48 && key <= 57 && GetValue<int>() <= 999999999) pressedKey = key;
 
         }
 
@@ -58,6 +59,6 @@ void Input::Draw()
 
     if (!IsDrawn()) return;
 
-    DrawRectangleV(Vector2{GetPosition().x, GetPosition().y + GetSize().y - 3.0f}, Vector2{GetSize().x, 3.0f}, GetTextColor());
+    DrawRectangleV(Vector2{GetPosition().x, GetPosition().y + GetSize().y}, Vector2{GetSize().x, 3.0f}, GetTextColor());
 }
 

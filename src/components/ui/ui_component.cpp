@@ -20,11 +20,6 @@ void UIComponent::Update()
     }
 }
 
-void UIComponent::Draw()
-{
-    position = CalculateAnchoredPosition();
-}
-
 Vector2 UIComponent::CalculateAnchoredPosition()
 {
     const Vector2 windowSize{
@@ -76,8 +71,14 @@ Vector2 UIComponent::CalculateAnchoredPosition()
 
 void UIComponent::SetPosition(const Vector2& value)
 {
-    position = value;
     basePosition = value;
+    position = CalculateAnchoredPosition();
+}
+
+void UIComponent::SetSize(const Vector2& value)
+{
+    size = value;
+    position = CalculateAnchoredPosition();
 }
 
 bool UIComponent::IsHovering() const
@@ -91,4 +92,10 @@ bool UIComponent::IsHovering() const
     if (mousePos.y > size.y + position.y) return false;
 
     return true;
+}
+
+void UIComponent::SetAnchor(const Anchor& value)
+{
+    anchor = value;
+    position = CalculateAnchoredPosition();
 }
