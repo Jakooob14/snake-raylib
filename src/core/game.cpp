@@ -26,10 +26,9 @@ void Game::Run()
     CloseWindow();
 }
 
-void Game::SetCurrentScreen(std::unique_ptr<Screen> screen)
+void Game::SetNextScreen(std::unique_ptr<Screen> screen)
 {
-    currentScreen = std::move(screen);
-    currentScreen->Initialize();
+    nextScreen = std::move(screen);
 }
 
 void Game::Exit() {
@@ -42,8 +41,13 @@ void Game::Update()
 
     timerManager.UpdateTimers(deltaTime);
 
-    assert(currentScreen && "currentScreen is null in Game::Update()");
-    currentScreen->Update();
+    if (currentScreen) currentScreen->Update();
+
+    if (nextScreen)
+    {
+        currentScreen = std::move(nextScreen);
+        currentScreen->Initialize();
+    }
 }
 
 void Game::Draw()
@@ -85,5 +89,5 @@ void Game::Initialize()
     mechaFont = LoadFont("./resources/fonts/mecha.png");
 
     // Create and set current screen
-    SetCurrentScreen(std::make_unique<MenuScreen>(*this));
+    SetNextScreen(std::make_unique<MenuScreen>(*this));
 }

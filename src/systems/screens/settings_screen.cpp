@@ -9,12 +9,13 @@ void SettingsScreen::Initialize()
 {
     Screen::Initialize();
 
+    // auto* width
+
     auto* backButton{AddComponent<Button>()};
     backButton->SetText("Back");
     backButton->SetAnchor(UIComponent::Anchor::CENTER);
     backButton->SetFontSize(2.0f);
-    backButton->SetOnClick([this](){ game.SetCurrentScreen(std::make_unique<MenuScreen>(game)); });
-
+    backButton->SetOnClick([this](){ game.SetNextScreen(std::make_unique<MenuScreen>(game)); });
 
     auto* input{AddComponent<Input>()};
     input->SetAnchor(UIComponent::Anchor::CENTER);

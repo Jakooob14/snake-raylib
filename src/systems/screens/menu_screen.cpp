@@ -21,7 +21,7 @@ void MenuScreen::Initialize()
     Screen::Initialize();
 
     AddButton("Play", [this](){ PlayClick(); });
-    AddButton("Settings", [this](){ game.SetCurrentScreen(std::make_unique<SettingsScreen>(game)); });
+    AddButton("Settings", [this](){ game.SetNextScreen(std::make_unique<SettingsScreen>(game)); });
     AddButton("Exit", [this](){ game.Exit(); });
 
     auto* text = AddComponent<Text>("Snake");
@@ -49,5 +49,5 @@ Button* MenuScreen::AddButton(const char* text, const std::function<void()>& onC
 }
 
 void MenuScreen::PlayClick() {
-    game.SetCurrentScreen(std::make_unique<GameScreen>(game));
+    game.SetNextScreen(std::make_unique<GameScreen>(game));
 }

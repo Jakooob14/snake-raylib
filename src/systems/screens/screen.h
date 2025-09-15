@@ -38,8 +38,7 @@ public:
 
         T* ptr = component.get();
 
-        // Convert derived unique_ptr to base unique_ptr and transfer ownership to components vector
-        components.push_back(std::unique_ptr<GameComponent>(static_cast<GameComponent*>(component.release())));
+        components.push_back(std::move(component));
 
         return ptr;
     }

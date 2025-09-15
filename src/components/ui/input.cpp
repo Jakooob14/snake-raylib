@@ -41,13 +41,6 @@ void Input::Update()
 
         }
 
-        // if (key >= 32 && key <= 125)
-        // {
-        //     std::string newText = GetText();
-        //     newText += static_cast<char>(key);
-        //     SetText(newText);
-        // }
-
         if (!pressedKey) return;
 
         std::string newText = GetText();

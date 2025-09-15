@@ -13,7 +13,7 @@ class Game
 public:
     void Run();
 
-    void SetCurrentScreen(std::unique_ptr<Screen> screen);
+    void SetNextScreen(std::unique_ptr<Screen> screen);
 
     [[nodiscard]] bool IsGameOver() const { return gameOver; }
     void SetGameOver(const bool& value) { gameOver = value; }
@@ -27,7 +27,7 @@ public:
     void Exit();
 
 private:
-    int gameWidth{768};
+    int gameWidth{640};
     int gameHeight{640};
     Color windowBackgroundColor{BLACK};
     RenderTexture2D renderTarget{};
@@ -36,6 +36,7 @@ private:
     bool gameOver{false};
 
     std::unique_ptr<Screen> currentScreen{nullptr};
+    std::unique_ptr<Screen> nextScreen{nullptr};
 
 
     void Update();
