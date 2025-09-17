@@ -10,6 +10,13 @@ void GameScreen::Update()
 {
     Screen::Update();
 
+    // Prevent fruit overflow
+    const int maxFruit{static_cast<int>(pow(game.GetGridRows(), 2) - player->GetSegments().size())};
+    if (fruitCount >= maxFruit)
+    {
+        fruitCount = maxFruit;
+    }
+
     if (fruits.size() < fruitCount)
     {
         for (size_t i = 0; fruitCount - fruits.size() > 0; ++i)
@@ -44,8 +51,8 @@ void GameScreen::Initialize()
 void GameScreen::SpawnFruit()
 {
     const Vector2 pos{
-            static_cast<float>(GetRandomInt(0, game.GetGameWidth() / playerSize.x - 1)),
-            static_cast<float>(GetRandomInt(0, game.GetGameHeight() / playerSize.y - 1))
+            static_cast<float>(GetRandomInt(0, gameWidth / playerSize.x - 1)),
+            static_cast<float>(GetRandomInt(0, gameHeight / playerSize.y - 1))
     };
 
     // Check if new fruit would spawn at player, if yes try again

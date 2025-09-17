@@ -18,7 +18,7 @@ public:
     void SetText(const std::string& value) { text = value; }
 
     [[nodiscard]] float GetFontSize() const { return fontSize; }
-    void SetFontSize(const float& value) { fontSize = value; }
+    void SetFontSize(const float& value);
 
     [[nodiscard]] float GetSpacing() const { return spacing; }
     void SetSpacing(const float& value) { spacing = value; }

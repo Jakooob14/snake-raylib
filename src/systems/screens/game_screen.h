@@ -3,6 +3,7 @@
 #include "screen.h"
 #include "../../components/entities/player.h"
 #include "../../components/ui/text.h"
+#include "../../core/game.h"
 
 class Fruit;
 
@@ -17,8 +18,11 @@ protected:
     void Initialize() override;
 
 private:
-    const Vector2 playerSize{32.0f, 32.0f};
-    int fruitCount{3};
+    const Vector2 playerSize{
+        static_cast<float>(gameWidth / game.GetGridRows()),
+        static_cast<float>(gameHeight / game.GetGridRows())
+    };
+    int fruitCount{game.GetMaxFruit()};
 
     Text* gameOverText{nullptr};
     Player* player;

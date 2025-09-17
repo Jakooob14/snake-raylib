@@ -3,6 +3,7 @@
 #include <memory>
 #include <raylib.h>
 
+#include "globals.h"
 #include "../systems/screens/screen.h"
 
 
@@ -18,19 +19,20 @@ public:
     [[nodiscard]] bool IsGameOver() const { return gameOver; }
     void SetGameOver(const bool& value) { gameOver = value; }
 
-    [[nodiscard]] int GetGameWidth() const { return gameWidth; }
-    void SetGameWidth(const int& value) { gameWidth = value; }
+    [[nodiscard]] int GetGridRows() const { return gridRows; }
+    void SetGridRows(const int& value) { gridRows = value; }
 
-    [[nodiscard]] int GetGameHeight() const { return gameHeight; }
-    void SetGameHeight(const int& value) { gameHeight = value; }
+    [[nodiscard]] int GetMaxFruit() const { return maxFruit; }
+    void SetMaxFruit(const int& value) { maxFruit = value; }
 
     void Exit();
 
 private:
-    int gameWidth{640};
-    int gameHeight{640};
     Color windowBackgroundColor{BLACK};
     RenderTexture2D renderTarget{};
+
+    int gridRows{16};
+    int maxFruit{3};
 
     bool shouldExit{false};
     bool gameOver{false};

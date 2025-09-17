@@ -23,8 +23,8 @@ void UIComponent::Update()
 Vector2 UIComponent::CalculateAnchoredPosition()
 {
     const Vector2 windowSize{
-        static_cast<float>(GetScreenWidth()),
-        static_cast<float>(GetScreenHeight())
+        static_cast<float>(gameWidth),
+        static_cast<float>(gameHeight)
     };
 
     Vector2 anchoredPosition{};
@@ -83,11 +83,24 @@ void UIComponent::SetSize(const Vector2& value)
 
 bool UIComponent::IsHovering() const
 {
-    const Vector2 mousePos{GetMousePosition()};
+    Vector2 mousePos = GetMousePosition();
+
+    // Calculate scale and offset (should match your Draw() logic)
+    float scaleX = static_cast<float>(GetScreenWidth()) / gameWidth;
+    float scaleY = static_cast<float>(GetScreenHeight()) / gameHeight;
+    float scale = std::min(scaleX, scaleY);
+
+    float destWidth = gameWidth * scale;
+    float destHeight = gameHeight * scale;
+    float offsetX = (static_cast<float>(GetScreenWidth()) - destWidth) * 0.5f;
+    float offsetY = (static_cast<float>(GetScreenHeight()) - destHeight) * 0.5f;
+
+    // Transform mouse position to render target space
+    mousePos.x = (mousePos.x - offsetX) / scale;
+    mousePos.y = (mousePos.y - offsetY) / scale;
 
     if (mousePos.x < position.x) return false;
     if (mousePos.x > size.x + position.x) return false;
-
     if (mousePos.y < position.y) return false;
     if (mousePos.y > size.y + position.y) return false;
 

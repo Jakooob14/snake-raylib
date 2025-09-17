@@ -12,4 +12,7 @@ extern std::mt19937 rng;
 
 extern TimerManager timerManager;
 
+extern int gameWidth;
+extern int gameHeight;
+
 #endif //GLOBALS_H

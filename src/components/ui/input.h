@@ -18,7 +18,20 @@ public:
     };
 
     template<typename T>
-    [[nodiscard]] T GetValue();
+    T GetValue()
+    {
+        switch (inputType)
+        {
+            case InputTypes::INT:
+                if (GetText().empty()) return 0;
+                if (std::is_same_v<T, int>) return std::stoi(GetText());
+            default:
+                throw;
+        }
+    }
+
+    [[nodiscard]] int GetMaxIntSize() const { return maxIntSize; }
+    void SetMaxIntSize(const int& value) { maxIntSize = value; }
 
 protected:
     void Update() override;
@@ -26,6 +39,7 @@ protected:
 
 private:
     InputTypes inputType{InputTypes::INT};
+    int maxIntSize{999999999};
 };
 
 

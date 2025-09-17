@@ -6,24 +6,22 @@ void ListPanel::AddUIComponent(UIComponent* uiComponent)
 {
     uiComponents.push_back(uiComponent);
 
+    float yOffset = 0.0f;
+    float xOffset = 0.0f;
+    Vector2 panelPos = GetPosition();
+
     for (int i = 0; i < uiComponents.size(); ++i)
     {
-        const Vector2 pos{uiComponents[i]->GetBasePosition()};
-        const Vector2 thisPos{GetPosition()};
-
         switch (listDirection)
         {
             case ListDirection::COLUMN:
-                uiComponents[i]->SetPosition(Vector2{pos.x, i * (i > 0 ? uiComponents[i - 1]->GetSize().y : 0)});
+                if (i > 0) yOffset += uiComponents[i - 1]->GetSize().y;
+                uiComponents[i]->SetPosition(Vector2{panelPos.x, panelPos.y + yOffset});
                 break;
             case ListDirection::ROW:
-                uiComponents[i]->SetPosition(Vector2{i * (i > 0 ? uiComponents[i - 1]->GetSize().x : 0), pos.y});
-                if (GetAnchor() == Anchor::CENTER)
-                {
-                    printf("%f, %f\n", pos.y, thisPos.y);
-                }
+                if (i > 0) xOffset += uiComponents[i - 1]->GetSize().x + 32.0f;
+                uiComponents[i]->SetPosition(Vector2{panelPos.x + xOffset, panelPos.y});
                 break;
         }
-
     }
 }

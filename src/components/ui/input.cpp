@@ -1,18 +1,5 @@
 #include "input.h"
 
-template<typename T>
-T Input::GetValue()
-{
-    switch (inputType)
-    {
-        case InputTypes::INT:
-            if (GetText().empty()) return 0;
-            if (std::is_same_v<T, int>) return std::stoi(GetText());
-        default:
-            throw;
-    }
-}
-
 void Input::Update()
 {
     Text::Update();
@@ -33,19 +20,16 @@ void Input::Update()
             }
         }
 
-        int pressedKey{};
+        std::string newText = GetText();
+        newText += static_cast<char>(key);
 
         switch (inputType)
         {
             case InputTypes::INT:
-                if (key >= 48 && key <= 57 && GetValue<int>() <= 999999999) pressedKey = key;
+                if (key < 48 || key > 57 || std::stoi(newText) > maxIntSize) return;
 
         }
 
-        if (!pressedKey) return;
-
-        std::string newText = GetText();
-        newText += static_cast<char>(pressedKey);
         SetText(newText);
     } else
     {
