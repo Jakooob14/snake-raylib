@@ -1,3 +1,5 @@
+#include <string>
+
 #include "input.h"
 
 void Input::Update()

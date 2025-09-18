@@ -1,7 +1,9 @@
 #ifndef INPUT_H
 #define INPUT_H
+
+#include <string>
+
 #include "text.h"
-#include "ui_component.h"
 
 
 class Input : public Text
